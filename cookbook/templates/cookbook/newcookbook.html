@@ -1,0 +1,15 @@
+{% extends "cookbook/layout.html" %}
+
+{% block body %}
+    <h2>Create a new Cookbook</h2>
+
+
+    <form action="{% url 'newcookbook' %}" method="post"  enctype="multipart/form-data">
+      <div class="form-group">
+      {% csrf_token %}
+      {{form}}
+    <input type="submit">
+    </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+search = request.GET.get('search')
+search = request.GET.get('search')
+search = request.GET.get('search')
+search = request.GET.get('search')
+
+{% extends "cookbook/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+
+    <h1>Search result</h1>
+
+    <ul>
+        {% for entry in entries %}
+            <li><a href="{% url 'get' entry %}">{{ entry }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cookbook/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+.carousel-inner p {
+
+}
+
+.header {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  width: 18rem;
+  margin-bottom: 20px;
+}
+
+.card-img-top {
+  height: 200px;
+}
+
+.center {
+  margin-left: 100px;
+  margin-right: auto;
+  width: 50%;
+
+}

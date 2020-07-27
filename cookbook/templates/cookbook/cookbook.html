@@ -1,0 +1,78 @@
+{% extends "cookbook/layout.html" %}
+{% load static %}
+
+{% block body %}
+{{ cookbook.id |json_script:"cookbook_id" }}
+{{ comments |json_script:"comments" }}
+
+
+<div class="container-fluid">
+
+  <h3 class="header"> {{cookbook.name}} </h3>
+  <div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link active" id="v-pills-description-tab" data-toggle="pill" href="#v-pills-description" role="tab" aria-controls="v-pills-description" aria-selected="true">Description</a>
+      <a class="nav-link" id="v-pills-recipes-tab" data-toggle="pill" href="#v-pills-recipes" role="tab" aria-controls="v-pills-recipes" aria-selected="false">Recipes</a>
+      <a class="nav-link" id="v-pills-comments-tab" data-toggle="pill" href="#v-pills-comments" role="tab" aria-controls="v-pills-comments" aria-selected="false">Comments</a>
+
+      <a class="nav-link" id="v-pills-edit-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-controls="v-pills-edit" aria-selected="false">Edit</a>
+
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab">
+
+        <img src="{{cookbook.picture}}" class="center" alt="...">
+
+        <p>{{cookbook.description}}</p>
+      </div>
+      <div class="tab-pane fade" id="v-pills-edit" role="tabpanel" aria-labelledby="v-pills-edit-tab">
+        You may edit your recipe here
+      </div>
+      <div class="tab-pane fade" id="v-pills-comments" role="tabpanel" aria-labelledby="v-pills-comments-tab">
+
+      </div>
+      <div class="tab-pane fade" id="v-pills-recipes" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+        Here are the recipes in {{cookbook.name}}
+
+        <nav aria-label="Page nagivation">
+          <ul id="paginate" class="pagination justify-content-end">
+
+          </ul>
+        </nav>
+        <div id="index-view" class="container-fluid" data-profile="{{ recipe.username | default:"0" }}">
+          <div id="recipe-firstrow" class="row" >
+            {% for recipe in recipes %}
+              <div class="col-4">
+                <div class="card">
+                  <img src="{{recipe.picture.url}}" class="card-img-top" alt="...">
+                  <h5 class = "card-title"> {{recipe.name}}</h5>
+                  <p  class = "class-text"> {{recipe.description}}</p>
+                  <p  class = "class-text"> {{recipe.date_created}}</p>
+                  <div class="row">
+                    <div class="col-4">
+                      <a href="/getrecipe/{{recipe.id}}"><button class="btn btn-outline-primary">View</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cookbook/cookbook.js' %}"></script>
+{% endblock %}

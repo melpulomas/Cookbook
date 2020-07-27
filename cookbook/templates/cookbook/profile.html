@@ -1,0 +1,95 @@
+{% extends "cookbook/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container-fluid">
+  <div class="header">
+    <div class="row">
+
+      <div class="col-4">
+      <h3> {{user.username}} </h3>
+      </div>
+      <div class="col-8">
+        {% if not own_profile %}
+        <form action="{% url 'followuser' user.username %}" method="post" method="post">
+          {% csrf_token %}
+        <button id="followbtn" class="btn btn-primary"/>
+          {% if is_following %}
+            Unfollow
+          {% else %}
+            Follow
+          {% endif %}
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-general-tab" data-toggle="pill" href="#v-pills-general" role="tab" aria-controls="v-pills-general" aria-selected="true">General</a>
+        <a class="nav-link" id="v-pills-recipes-tab" data-toggle="pill" href="#v-pills-recipes" role="tab" aria-controls="v-pills-recipes" aria-selected="false">Recipes</a>
+        <a class="nav-link" id="v-pills-cookbook-tab" data-toggle="pill" href="#v-pills-cookbook" role="tab" aria-controls="v-pills-cookbook" aria-selected="false">Cookbook</a>
+        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+      </div>
+    </div>
+    <!-- Content -->
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-general" role="tabpanel" aria-labelledby="v-pills-general-tab">
+
+          <p>Number of Followers: {{followers}}</p>
+          <p>Number of Following: {{following}}</p>
+          <p>Joined since: {{user.date_joined}}</p>
+        </div>
+        <div class="tab-pane fade" id="v-pills-recipes" role="tabpanel" aria-labelledby="v-pills-recipes-tab">
+          Recipes by {{user.username}}:
+          <nav aria-label="Page nagivation">
+            <ul id="paginate" class="pagination justify-content-end">
+            </ul>
+          </nav>
+          <div id="profile-recipes-view" class="container-fluid" data-profile="{{ user.username | default:"0" }}">
+            <div id="recipe-firstrow" class="row" >
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-cookbook" role="tabpanel" aria-labelledby="v-pills-cookbook-tab">
+          <div class="row">
+            <div class="col-4">
+              Cookbooks by {{user.username}}:
+            </div>
+            <div class="col-8">
+              {% if own_profile %}
+                <form action="{% url 'newcookbook' %}">
+                  {% csrf_token %}
+                <button id="followbtn" class="btn btn-primary"/>
+                  Create Cookbook
+                </form>
+              {% endif %}
+            </div>
+          </div>
+          <nav aria-label="Page nagivation">
+            <ul id="paginate" class="pagination justify-content-end">
+            </ul>
+          </nav>
+          <div id="profile-cookbook-view" class="container-fluid" data-profile="{{ user.username | default:"0" }}">
+            <div id="cookbook-firstrow" class="row" >
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'cookbook/profile.js' %}"></script>
+{% endblock %}

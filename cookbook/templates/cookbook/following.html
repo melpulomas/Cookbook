@@ -1,0 +1,27 @@
+{% extends "cookbook/layout.html" %}
+{% load static %}
+
+{% block body %}
+  <div id="index-header">
+    <h2> Following {{message}}</h2>
+  </div>
+  <form id="newpost-form">
+    {% csrf_token %}
+  </form>
+
+  <nav aria-label="Page nagivation">
+    <ul id="paginate" class="pagination justify-content-end">
+
+    </ul>
+  </nav>
+
+  <div id="index-view" class="list-group" data-profile="following">
+
+  </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
