@@ -12,15 +12,19 @@ Cookbook is a fusion between social media and traditional cookbooks and aims to 
 3. Like and Comment
   * Users may give a like on any recipe to show support like in any other social media application.
   * Users can comment on both recipes and cookbooks. This allows users to appraise one another or have a discussion on how to improve on them.
+
+4. Message
+  * Users can privately message other users at either their own or the other user profile page
+  * Messages are private and so only showned between talking parties
   
-4. Follow
+5. Follow
   * Users may follow each other as with in many other social media application. 
   * Users may view all the post and cookbooks by the users they are following.
 
-5. Search
+6. Search
   * Finding recipe is made easy by the search bar at the navigation bar located at the top right corner.
   * Search result will show all recipes that starts with the search query
   
-6. User friendly view
+7. User friendly view
   * The website is designed to give users the best interface possible. This is done by using pagination when viewing all the recipes and cookbooks.
   * When viewing either a user, recipe or cookbook, contents in differnt section in seperated and users can view each section with a tab function on the left side of the page. This is to avoid cluttering on each page.
