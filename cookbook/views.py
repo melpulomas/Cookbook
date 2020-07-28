@@ -85,10 +85,6 @@ class NewCookbookForm(forms.ModelForm):
         self.fields['recipes'].queryset = Recipe.objects.filter(user=self.user)
         self.fields['recipes'].label_from_instance = lambda obj: "%s" % obj.__uncode__()
 
-
-
-
-
 def index(request):
     return render(request, "cookbook/index.html")
 
@@ -284,11 +280,6 @@ def cookbook(request, cookbook_id):
     cookbook = Cookbook.objects.get(pk=cookbook_id)
     recipes = cookbook.recipes.all()
 
-    for recipe in recipes:
-        print("one recipe")
-        print(recipe.picture)
-    print(cookbook.picture)
-
     try:
         comments = Message.objects.filter(cookbook=cookbook)
         comments_ser = []
@@ -309,13 +300,17 @@ def viewcookbooks(request, page, profile):
         if profile == "none":
             cookbooks = Cookbook.objects.all()
             cookbooks = cookbooks.order_by("-date_created").all()
+        elif profile == "following":
+            cookbooks = []
+            for follows in Follow.objects.filter(user_origin=request.user):
+                cookbooks=list(chain(cookbooks,Cookbook.objects.filter(user=follows.user_end).order_by("-date_created")))
+
         else:
         #loads the cookbook by their profile
             user = User.objects.get(username=profile)
             cookbooks = Cookbook.objects.filter(user=user)
             cookbooks = cookbooks.order_by("-date_created").all()
 
-        print(cookbooks)
         #Paginate the posts
         paginator = Paginator(cookbooks, 6)
         page_obj = paginator.get_page(page)
@@ -364,6 +359,7 @@ def getrecipe(request, recipe_id):
         "comments": comments_ser
     })
 
+@login_required
 def likepost(request):
     if request.method != "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
@@ -405,8 +401,6 @@ def createcomment(request):
     recipe_id = data.get("recipe_id", "")
     cookbook_id = data.get("cookbook_id", "")
     to_user_id = data.get("to_user_id", "")
-    print("LALALALALALLAALLALAALLAAL")
-    print(to_user_id)
     if not (to_user_id == ''):
 
         body = data.get("body", "")
@@ -424,10 +418,10 @@ def createcomment(request):
 
         new_comment = Message(user=request.user, body=body, cookbook=cookbook, private=False)
     new_comment.save()
-    print(new_comment)
     return JsonResponse({"message": "Comment submitted successfully"}, status=201)
 
 #Enable users to follow/unfollow another user
+@login_required
 def follow(request, username):
     user_end = User.objects.get(username=username)
     try:
@@ -438,3 +432,7 @@ def follow(request, username):
         new_following = Follow(user_origin=request.user, user_end=user_end)
         new_following.save()
         return HttpResponseRedirect(reverse("profile", args=(username,)))
+
+@login_required
+def following(request):
+    return render(request, "cookbook/following.html")

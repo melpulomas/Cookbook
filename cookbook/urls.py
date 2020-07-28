@@ -15,6 +15,7 @@ urlpatterns = [
     path("newcookbook", views.newcookbook, name="newcookbook"),
     path("profile/<str:username>", views.profile, name="profile"),
     path("cookbook/<int:cookbook_id>", views.cookbook, name="cookbook"),
+    path("following", views.following, name="following"),
 
     #API
     path("getrecipe/<int:recipe_id>", views.getrecipe, name="getrecipe"),
