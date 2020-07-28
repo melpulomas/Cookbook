@@ -83,8 +83,8 @@ class Message(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name="messaged")
     to = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True, related_name="messagedby")
     body = models.CharField(max_length=512)
-    recipes = models.ForeignKey('Recipe', on_delete=models.DO_NOTHING, null=True, related_name="havemessages")
-    cookbook = models.ForeignKey('Cookbook', on_delete=models.DO_NOTHING, null=True, related_name="messagescookbook")
+    recipes = models.ForeignKey('Recipe', on_delete=models.CASCADE, null=True, related_name="havemessages")
+    cookbook = models.ForeignKey('Cookbook', on_delete=models.CASCADE, null=True, related_name="messagescookbook")
     private = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
