@@ -209,9 +209,12 @@ def profile(request, username):
     cookbooks = Cookbook.objects.filter(user=user)
     following = Follow.objects.filter(user_origin=user).count()
     followers = Follow.objects.filter(user_end=user).count()
-    messages_recieve = Message.objects.filter(to=user)
-    messages_sent = Message.objects.filter(user=user,private=True)
+    messagers_id = Message.objects.filter(to=user).values('user').distinct()
+    messagers = []
+    messages = Message.objects.exclude(to__isnull=True)
 
+    for messager_id in messagers_id:
+        messagers.append(User.objects.get(pk=messager_id.get('user')))
 
     if request.user.username == username:
         own_profile = True
@@ -232,8 +235,9 @@ def profile(request, username):
         "recipes": recipes,
         "following": following,
         "followers": followers,
-        "messages_recieve": messages_recieve,
-        "messages_sent": messages_sent,
+        "messages": messages,
+        "messagers": messagers,
+
         "own_profile": own_profile,
         "is_following": is_following
     })
@@ -336,7 +340,7 @@ def getrecipe(request, recipe_id):
     ingredients_list = jsonDec.decode(recipe.ingredients)
 
     try:
-        picture = recipe.picture.url
+        picture = recipe.picture
         comments = Message.objects.filter(recipes=recipe)
         comments_ser = []
         for comment in comments:
@@ -400,7 +404,16 @@ def createcomment(request):
     data = json.loads(request.body)
     recipe_id = data.get("recipe_id", "")
     cookbook_id = data.get("cookbook_id", "")
-    if not (recipe_id ==''):
+    to_user_id = data.get("to_user_id", "")
+    print("LALALALALALLAALLALAALLAAL")
+    print(to_user_id)
+    if not (to_user_id == ''):
+
+        body = data.get("body", "")
+        user = User.objects.get(pk=to_user_id)
+
+        new_comment = Message(user=request.user, body=body, to=user, private=True)
+    elif not (recipe_id ==''):
         body = data.get("body", "")
         recipe = Recipe.objects.get(pk=recipe_id)
 

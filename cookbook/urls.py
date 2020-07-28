@@ -21,7 +21,7 @@ urlpatterns = [
     path("viewrecipes/<int:page>/<str:profile>", views.viewrecipes, name="viewrecipes"),
     path("viewcookbooks/<int:page>/<str:profile>", views.viewcookbooks, name="viewcookbooks"),
     path("likepost", views.likepost, name="likepost"),
-    path("updatepost", views.update, name="update"),
+    path("updaterecipe", views.update, name="update"),
     path("createcomment", views.createcomment, name="createcomment"),
     path("followuser/<str:username>", views.follow, name="followuser")
 

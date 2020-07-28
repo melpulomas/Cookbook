@@ -216,7 +216,7 @@ function update_recipe(recipe_id){
   const token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
   const new_instructions = document.querySelector('#editingredients' + recipe_id).value;
   const new_ingredients = document.querySelector('#editinstructions' + recipe_id).value;
-  fetch('/updatepost', {
+  fetch('/updaterecipe', {
       method: 'PUT',
       headers: {
           'X-CSRFToken': token,

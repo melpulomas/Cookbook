@@ -15,12 +15,44 @@ function load_profile(page=1, scroll = 1){
   load_cookbook_tab(page, profile)
 
   //Messages
-  const messages_view = document.querySelector('#v-pills-messages');
-  messages_view.innerHTML ='';
-  //TODO create a message section
+
+  const reply_btn = document.querySelectorAll('#new_message');
+  reply_btn.forEach(function(button){
+    button.addEventListener('click', function () {
+      user_messaging_id = button.dataset.messagebetween
+      const message_body = document.querySelector(`#message_area_${user_messaging_id}`).value;
+
+      create_message(message_body, user_messaging_id);
+
+    });
+  });
+
+
   //messages_area = load_messages();
   //messages_view.append(comment_area);
 }
+
+function create_message(body, to_user_id){
+  const token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+  console.log(to_user_id)
+  fetch('/createcomment', {
+    method: 'POST',
+    headers: {
+        'X-CSRFToken': token,
+    },
+    body: JSON.stringify({
+        to_user_id: to_user_id,
+        body: body
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    window.location.reload(false);
+    return false;
+  });
+
+}
+
 
 function load_cookbook_tab(page, profile) {
   const view = document.querySelector('#profile-cookbook-view');
