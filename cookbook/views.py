@@ -189,7 +189,9 @@ def newcookbook(request):
         if form.is_valid():
             user = request.user
             current_date = (datetime.datetime.now())
+            picture = form.cleaned_data['picture']
             newcookbook = form.save(commit=False)
+            newcookbook.picture = picture
             newcookbook.user = user
             newcookbook.save()
             form.save_m2m()
@@ -277,6 +279,11 @@ def cookbook(request, cookbook_id):
 
     cookbook = Cookbook.objects.get(pk=cookbook_id)
     recipes = cookbook.recipes.all()
+
+    for recipe in recipes:
+        print("one recipe")
+        print(recipe.picture)
+    print(cookbook.picture)
 
     try:
         comments = Message.objects.filter(cookbook=cookbook)

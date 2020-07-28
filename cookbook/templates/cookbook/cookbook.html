@@ -47,7 +47,7 @@
             {% for recipe in recipes %}
               <div class="col-4">
                 <div class="card">
-                  <img src="{{recipe.picture.url}}" class="card-img-top" alt="...">
+                  <img src="/media/{{recipe.picture}}" class="card-img-top" alt="...">
                   <h5 class = "card-title"> {{recipe.name}}</h5>
                   <p  class = "class-text"> {{recipe.description}}</p>
                   <p  class = "class-text"> {{recipe.date_created}}</p>
