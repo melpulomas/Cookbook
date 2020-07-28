@@ -1,7 +1,3 @@
-search = request.GET.get('search')
-search = request.GET.get('search')
-search = request.GET.get('search')
-search = request.GET.get('search')
 
 {% extends "cookbook/layout.html" %}
 
@@ -11,15 +7,37 @@ search = request.GET.get('search')
 
 
     <h1>Search result</h1>
+    <h1>{{message}}</h1>
+    <nav aria-label="Page nagivation">
+      <ul id="paginate" class="pagination justify-content-end">
 
-    <ul>
-        {% for entry in entries %}
-            <li><a href="{% url 'get' entry %}">{{ entry }}</a></li>
+      </ul>
+    </nav>
+    <div id="index-view" class="container-fluid" data-profile="{{ recipe.username | default:"0" }}">
+      <div id="recipe-firstrow" class="row" >
+        {% for recipe in recipes %}
+
+          <div class="col-4">
+            <div class="card">
+              <img src="{{recipe.picture}}" class="card-img-top" alt="...">
+              <h5 class = "card-title"> {{recipe.name}}</h5>
+              <p  class = "class-text"> {{recipe.description}}</p>
+              <p  class = "class-text"> {{recipe.date_created}}</p>
+              <div class="row">
+                <div class="col-4">
+                  <a href="/getrecipe/{{recipe.id}}"><button class="btn btn-outline-primary">View</button></a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         {% endfor %}
-    </ul>
+      </div>
+    </div>
 
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'cookbook/index.js' %}"></script>
+
 {% endblock %}

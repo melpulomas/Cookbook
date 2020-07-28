@@ -131,7 +131,7 @@
               {% endif %}
             {% endfor %}
             <div id="commentdiv" class="container-fluid">
-              Enter a message here: <textarea class="form-control" id="message_area"></textarea>
+              Enter a message here: <textarea class="form-control" id="message_area_{{user.id}}"></textarea>
               <button class='btn btn-outline-primary' id="new_message" data-messagebetween="{{user.id}}">Reply</button>
             </div>
           </div>

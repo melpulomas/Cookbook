@@ -31,7 +31,8 @@ function loadpost(page = 1, scroll = 1) {
 
       let contents = `<img src="${post.picture}" class="card-img-top" alt="...">`
       contents += `<div class="post">`;
-      contents += `<a href="/profile/${post.username}"><h5 class = "card-title"> ${post.username} </h5></a>`;
+      contents += `<a href="/profile/${post.username}"><h5 class = "card-title"> @${post.username} </h5></a>`;
+      contents += `<h5 class = "card-title"> ${post.name}</h5>`;
       contents += `<p  class = "class-text"> ${post.description}</p>`;
       contents += `<p  class = "class-text"> ${post.date_created}</p>`;
       contents += `<div class="likearea">`;
@@ -112,8 +113,9 @@ function load_cookbook_tab(page = 1 ,scroll = 1) {
       item.id = `itemdiv${cookbook.id}`;
 
       let contents = `<img src="${cookbook.picture}" class="card-img-top" alt="...">`
+      contents += `<a href="/profile/${cookbook.username}"><h5 class = "card-title"> @${cookbook.username} </h5></a>`;
       contents += `<div class="post">`;
-      contents += `<h5 class = "card-title"> ${cookbook.name} </h5></a>`;
+      contents += `<h5 class = "card-title"> ${cookbook.name} </h5>`;
       contents += `<p  class = "class-text"> ${cookbook.description}</p>`;
       contents += `<p  class = "class-text"> ${cookbook.date_created}</p>`;
       contents += `<div class="likearea">`;

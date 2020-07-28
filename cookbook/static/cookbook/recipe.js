@@ -64,7 +64,8 @@ function load_profile_tab(page, profile, recipe_id) {
 
       let contents = `<img src="${post.picture}" class="card-img-top" alt="...">`
       contents += `<div class="post">`;
-      contents += `<a href="/profile/${post.username}"><h5 class = "card-title"> ${post.username} </h5></a>`;
+      contents += `<a href="/profile/${post.username}"><h5 class = "card-title"> @${post.username} </h5></a>`;
+      contents += `<h5 class = "card-title"> ${post.name}</h5>`;
       contents += `<p  class = "class-text"> ${post.description}</p>`;
       contents += `<p  class = "class-text"> ${post.date_created}</p>`;
       contents += `<div class="likearea">`;

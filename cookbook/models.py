@@ -35,6 +35,7 @@ class Recipe(models.Model):
         return {
             "id": self.id,
             "user_id": self.user.id,
+            "name": self.name,
             "username": self.user.username,
             "description": self.description,
             "instructions_list": self.instructions,
@@ -62,6 +63,7 @@ class Cookbook(models.Model):
 
         return {
             "id": self.id,
+            "username": self.user.username,
             "user_id": self.user.id,
             "name": self.name,
             "description": self.description,

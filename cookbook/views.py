@@ -140,17 +140,20 @@ def register(request):
         return render(request, "cookbook/register.html")
 
 def search(request):
-    name = request.GET.get('search')
-    recipes = list(Recipe.objects.all())
-
+    searched = request.GET.get('search')
+    all_likes = Like.objects.all()
+    message = ''
+    recipes = []
     try:
-        recipes = list(Recipe.objects.all())
+        recipes = Recipe.objects.filter(name__icontains=searched)
     except Recipe.DoesNotExist:
-        message = "Could not find any recipe"
+        message = f"No result found for {searched}"
 
     finally:
         return render(request, "cookbook/search.html",{
-            "recipes": recipes
+            "message": message,
+            "all_likes": all_likes,
+            "recipes": [recipe.serialize(request) for recipe in recipes]
         })
 
 @login_required
